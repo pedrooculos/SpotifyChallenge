@@ -12,13 +12,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(CURL REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
-        myspotify.cpp
-        myspotify.h
-        myspotify.ui
+        Tests/testAccessToken.cpp
+        spotifyapp.h
+        spotifyapp.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -44,7 +44,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(SpotifyChallenge PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(SpotifyChallenge PRIVATE Qt${QT_VERSION_MAJOR}::Widgets CURL::libcurl)
 
 set_target_properties(SpotifyChallenge PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

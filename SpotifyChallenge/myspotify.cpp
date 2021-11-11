@@ -1,4 +1,5 @@
 #include "myspotify.h"
+#include "spotifyapp.h"
 #include "./ui_myspotify.h"
 
 MySpotify::MySpotify(QWidget *parent)
@@ -6,7 +7,9 @@ MySpotify::MySpotify(QWidget *parent)
     , ui(new Ui::MySpotify)
 {
     ui->setupUi(this);
+    SpotifyApp();
 }
+
 
 MySpotify::~MySpotify()
 {
