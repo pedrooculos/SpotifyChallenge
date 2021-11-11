@@ -14,8 +14,12 @@ class SpotifyApp
 {
     public:
         SpotifyApp();
-        void getAccessToken();
+        void authentication();
         void search();
+
+        void setAccessToken(const QString&);
+        const QString getAccessToken();
+
     private:
         QString accessToken;
 };

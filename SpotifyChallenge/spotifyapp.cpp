@@ -39,10 +39,10 @@ static std::string getStringFromFile(std::string path)
 
 SpotifyApp::SpotifyApp()
 {
-    SpotifyApp::getAccessToken();
+    SpotifyApp::authentication();
 }
 
-void SpotifyApp::getAccessToken()
+void SpotifyApp::authentication()
 {
     CURL* curl;
     curl = curl_easy_init();
@@ -78,7 +78,7 @@ void SpotifyApp::getAccessToken()
     QJsonObject responseJsonObject = responseJsonDocument.object();
     QString accessToken = responseJsonObject["access_token"].toString();
 
-    this->accessToken = accessToken;
+    setAccessToken(accessToken);
 }
 
 void SpotifyApp::search()
@@ -95,7 +95,7 @@ void SpotifyApp::search()
     CURLcode response;
 
     struct curl_slist* header = NULL;
-    std::string strHeader = "Authorization: Bearer " + this->accessToken.toStdString();
+    std::string strHeader = "Authorization: Bearer " + getAccessToken().toStdString();
 
     header = curl_slist_append(header, "Content-Type: application/json");
     header = curl_slist_append(header, strHeader.c_str());
@@ -126,6 +126,16 @@ void SpotifyApp::search()
 
     std::cout << requestResponse.response << std::endl;
 
+}
+
+const QString SpotifyApp::getAccessToken()
+{
+    return this->accessToken;
+}
+
+void SpotifyApp::setAccessToken(const QString& accessToken)
+{
+    this->accessToken = accessToken;
 }
 
 
