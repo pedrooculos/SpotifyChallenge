@@ -14,9 +14,8 @@ class SpotifyApp
 {
     public:
         SpotifyApp();
-
         void getAccessToken();
-
+        void search();
     private:
         QString accessToken;
 };
