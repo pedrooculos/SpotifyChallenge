@@ -16,7 +16,7 @@ find_package(CURL REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        Tests/testAccessToken.cpp
+        Tests/testSpotifySearch.cpp
         spotifyapp.h
         spotifyapp.cpp
 )

@@ -4,5 +4,8 @@
 int main(int argc, char *argv[])
 {
     SpotifyApp spotifyApp;
+
+    spotifyApp.search();
+
     return 0;
 }
