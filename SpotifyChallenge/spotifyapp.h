@@ -18,7 +18,7 @@ class SpotifyApp
         void getAccessToken();
 
     private:
-        std::string accessToken;
+        QString accessToken;
 };
 
 #endif // SPOTIFYAPP_H
