@@ -60,7 +60,7 @@ void SpotifyApp::getAccessToken()
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &callbackFunction);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&tokenBuffer);
     curl_easy_setopt(curl, CURLOPT_URL, "https://accounts.spotify.com/api/token");
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);  // Can't authenticate the certificate, so disable authentication.
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
     std::string postData = "grant_type=client_credentials&client_id=" + clientId + "&client_secret="+clientSecret;
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
@@ -72,8 +72,12 @@ void SpotifyApp::getAccessToken()
        std::cout << "Request Error" << std::endl;
     }
 
-    std::cout << tokenBuffer.response << std::endl;
+    QString responseStr = tokenBuffer.response;
+    QJsonDocument responseJsonDocument =  QJsonDocument::fromJson(responseStr.toUtf8());
+    QJsonObject responseJsonObject = responseJsonDocument.object();
+    QString accessToken = responseJsonObject["access_token"].toString();
 
+    this->accessToken = accessToken;
 }
 
 
