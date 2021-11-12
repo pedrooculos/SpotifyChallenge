@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QString>
+#include "jsonhandler.h"
 
 class SpotifyApp
 {

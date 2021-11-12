@@ -30,10 +30,8 @@ void SpotifyApp::authentication()
 
     std::string responseStdString = curl.postOperation(postUrl,postData);
 
-    QString responseQStr;
-    responseQStr = responseQStr.fromStdString(responseStdString);
-    QJsonDocument responseJsonDocument =  QJsonDocument::fromJson(responseQStr.toUtf8());
-    QJsonObject responseJsonObject = responseJsonDocument.object();
+    QJsonObject responseJsonObject = strToQjsonObj(responseStdString);
+
     QString accessToken = responseJsonObject["access_token"].toString();
 
     setAccessToken(accessToken);

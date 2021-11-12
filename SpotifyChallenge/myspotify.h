@@ -17,7 +17,6 @@ public:
     ~MySpotify();
 
 private slots:
-
     void on_searchButton_clicked();
 
 private:
