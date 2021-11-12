@@ -66,5 +66,32 @@ const std::string CurlHandler::postOperation(const std::string& postURL,const st
 
 }
 
+const std::string CurlHandler::getOperation(const std::string& url, const std::string& authentication)
+{
+    CURLcode response;
+    struct curl_slist* header = NULL;
+    header = curl_slist_append(header, "Content-Type: application/json");
+    header = curl_slist_append(header, authentication.c_str());
+
+    struct memory requestResponse= {0};
+    curl_easy_setopt(curlObject, CURLOPT_WRITEFUNCTION, &callbackFunction);
+    curl_easy_setopt(curlObject, CURLOPT_WRITEDATA, (void *)&requestResponse);
+    curl_easy_setopt(curlObject, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curlObject, CURLOPT_SSL_VERIFYPEER, false);
+    curl_easy_setopt(curlObject, CURLOPT_HTTPHEADER, header);
+    curl_easy_setopt(curlObject, CURLOPT_HTTPGET, 1L);
+
+    response = curl_easy_perform(curlObject);
+    if (response != CURLE_OK)
+    {
+       std::cout << "Request Error" << std::endl;
+    }
+
+    return requestResponse.response;
+
+}
+
+
+
 
 

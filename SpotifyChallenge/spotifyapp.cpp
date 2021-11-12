@@ -1,6 +1,7 @@
 #include "spotifyapp.h"
+#include "curlhandler.h"
 
-struct memory
+/*struct memory
 {
     char* response;
     size_t size;
@@ -15,13 +16,13 @@ size_t callbackFunction(void* data,size_t size, size_t nmemb, void* userp)
     if(ptr == NULL)
         return 0;  /* out of memory! */
 
-    mem->response = ptr;
+/*    mem->response = ptr;
     memcpy(&(mem->response[mem->size]), data, realsize);
     mem->size += realsize;
     mem->response[mem->size] = 0;
 
     return realsize;
-}
+}*/
 
 
 
@@ -44,37 +45,18 @@ SpotifyApp::SpotifyApp()
 
 void SpotifyApp::authentication()
 {
-    CURL* curl;
-    curl = curl_easy_init();
+    CurlHandler curl;
 
-    if(!curl)
-    {
-           std::cerr << "Could not initiate cURL" << std::endl;
-           return;
-    }
-
-    struct memory tokenBuffer= {0};
     std::string clientId = getStringFromFile("D:\\QtProject\\SpotifyChallenge\\SpotifyChallenge\\Credentials\\client_id.txt");
     std::string clientSecret = getStringFromFile("D:\\QtProject\\SpotifyChallenge\\SpotifyChallenge\\Credentials\\client_secret.txt");
-
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &callbackFunction);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&tokenBuffer);   
-    curl_easy_setopt(curl, CURLOPT_URL, "https://accounts.spotify.com/api/token");
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
     std::string postData = "grant_type=client_credentials&client_id=" + clientId + "&client_secret="+clientSecret;
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData.c_str());
+    std::string postUrl = "https://accounts.spotify.com/api/token";
 
-    CURLcode response;
-    response = curl_easy_perform(curl);
-    if (response != CURLE_OK)
-    {
-       std::cout << "Request Error" << std::endl;
-    }
-    curl_easy_cleanup(curl);
+    std::string responseStdString = curl.postOperation(postUrl,postData);
 
-    QString responseStr = tokenBuffer.response;
-    QJsonDocument responseJsonDocument =  QJsonDocument::fromJson(responseStr.toUtf8());
+    QString responseQStr;
+    responseQStr = responseQStr.fromStdString(responseStdString);
+    QJsonDocument responseJsonDocument =  QJsonDocument::fromJson(responseQStr.toUtf8());
     QJsonObject responseJsonObject = responseJsonDocument.object();
     QString accessToken = responseJsonObject["access_token"].toString();
 
@@ -83,49 +65,20 @@ void SpotifyApp::authentication()
 
 void SpotifyApp::search()
 {
-    CURL* curl;
-    curl = curl_easy_init();
-
-    if(!curl)
-    {
-           std::cerr << "Could not initiate cURL" << std::endl;
-           return;
-    }
-
-    CURLcode response;
-
-    struct curl_slist* header = NULL;
-    std::string strHeader = "Authorization: Bearer " + getAccessToken().toStdString();
-
-    header = curl_slist_append(header, "Content-Type: application/json");
-    header = curl_slist_append(header, strHeader.c_str());
+    CurlHandler curl;
 
     std::string searchString = "https://api.spotify.com/v1/search";
-    searchString += "?q=Aurora";
-    searchString += "&type=track%2Cartist";
+    searchString += "?q=Ramsey-Goodbye";
+    searchString += "&type=track";
     searchString += "&market=ES";
-    searchString += "&limit=10";
-    searchString += "&offset=5";
+    searchString += "&limit=1";
+    searchString += "&offset=0";
 
+    std::string authenticationStr ="Authorization: Bearer " + getAccessToken().toStdString();
 
-    struct memory requestResponse= {0};
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &callbackFunction);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&requestResponse);
-    curl_easy_setopt(curl, CURLOPT_URL, searchString.c_str());
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header);
-    curl_easy_setopt(curl, CURLOPT_HTTPGET, 1L);
+    std::string responseStdString = curl.getOperation(searchString,authenticationStr);
 
-
-    response = curl_easy_perform(curl);
-    if (response != CURLE_OK)
-    {
-       std::cout << "Request Error" << std::endl;
-    }
-    curl_easy_cleanup(curl);
-
-    std::cout << requestResponse.response << std::endl;
-
+    std::cout << responseStdString << std::endl;
 }
 
 const QString SpotifyApp::getAccessToken()

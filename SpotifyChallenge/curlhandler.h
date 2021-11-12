@@ -10,7 +10,8 @@ class CurlHandler
         ~CurlHandler();
 
         void putOperation();
-        const std::string postOperation(const std::string&,const std::string&);
+        const std::string postOperation(const std::string& url,const std::string& data);
+        const std::string getOperation(const std::string& url, const std::string& authentication);
 
     private:
         CURL* curlObject;

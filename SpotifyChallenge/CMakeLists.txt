@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         Tests/testSpotifySearch.cpp
         spotifyapp.h
         spotifyapp.cpp
+        curlhandler.h
+        curlhandler.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
