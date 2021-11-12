@@ -1,30 +1,6 @@
 #include "spotifyapp.h"
 #include "curlhandler.h"
 
-/*struct memory
-{
-    char* response;
-    size_t size;
-};
-
-size_t callbackFunction(void* data,size_t size, size_t nmemb, void* userp)
-{
-    size_t realsize = size * nmemb;
-    struct memory *mem = (struct memory *)userp;
-
-    char *ptr = (char*)realloc(mem->response, mem->size + realsize + 1);
-    if(ptr == NULL)
-        return 0;  /* out of memory! */
-
-/*    mem->response = ptr;
-    memcpy(&(mem->response[mem->size]), data, realsize);
-    mem->size += realsize;
-    mem->response[mem->size] = 0;
-
-    return realsize;
-}*/
-
-
 
 static std::string getStringFromFile(std::string path)
 {
@@ -63,7 +39,7 @@ void SpotifyApp::authentication()
     setAccessToken(accessToken);
 }
 
-void SpotifyApp::search()
+const std::string SpotifyApp::search()
 {
     CurlHandler curl;
 
@@ -75,10 +51,9 @@ void SpotifyApp::search()
     searchString += "&offset=0";
 
     std::string authenticationStr ="Authorization: Bearer " + getAccessToken().toStdString();
-
     std::string responseStdString = curl.getOperation(searchString,authenticationStr);
 
-    std::cout << responseStdString << std::endl;
+    return responseStdString;
 }
 
 const QString SpotifyApp::getAccessToken()

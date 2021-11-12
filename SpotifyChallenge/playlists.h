@@ -4,12 +4,14 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 class Playlists
 {
     public:
         Playlists();
         void addTrackToPlaylist(const std::string&);
+        void deletTrackFromPlaylist(const std::string&);
 
         const std::vector<std::string> getPlaylist();
 
