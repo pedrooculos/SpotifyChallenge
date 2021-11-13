@@ -23,6 +23,20 @@ size_t callbackFunction(void* data,size_t size, size_t nmemb, void* userp)
     return realsize;
 }
 
+size_t read_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
+{
+  FILE *readhere = (FILE *)userdata;
+  curl_off_t nread;
+
+  size_t retcode = fread(ptr, size, nmemb, readhere);
+
+  nread = (curl_off_t)retcode;
+
+  fprintf(stderr, "*** We read %" CURL_FORMAT_CURL_OFF_T
+          " bytes from file\n", nread);
+  return retcode;
+}
+
 CurlHandler::CurlHandler()
 {
     this->curlObject = curl_easy_init();
@@ -89,6 +103,20 @@ const std::string CurlHandler::getOperation(const std::string& url, const std::s
 
     return requestResponse.response;
 
+}
+
+const std::string CurlHandler::putOperation(const std::string& url, const std::string& authentication)
+{
+    CURLcode response;
+
+    struct curl_slist* header = NULL;
+    header = curl_slist_append(header, "Content-Type: application/json");
+    header = curl_slist_append(header, authentication.c_str());
+
+    curl_easy_setopt(curlObject, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curlObject, CURLOPT_SSL_VERIFYPEER, false);
+    curl_easy_setopt(curlObject, CURLOPT_HTTPHEADER, header);
+    curl_easy_setopt(curlObject, CURLOPT_UPLOAD, 1L);
 }
 
 
