@@ -54,10 +54,6 @@ CurlHandler::~CurlHandler()
 }
 
 
-void CurlHandler::putOperation()
-{
-
-}
 
 const std::string CurlHandler::postOperation(const std::string& postURL,const std::string& postData)
 {
@@ -105,19 +101,6 @@ const std::string CurlHandler::getOperation(const std::string& url, const std::s
 
 }
 
-const std::string CurlHandler::putOperation(const std::string& url, const std::string& authentication)
-{
-    CURLcode response;
-
-    struct curl_slist* header = NULL;
-    header = curl_slist_append(header, "Content-Type: application/json");
-    header = curl_slist_append(header, authentication.c_str());
-
-    curl_easy_setopt(curlObject, CURLOPT_URL, url.c_str());
-    curl_easy_setopt(curlObject, CURLOPT_SSL_VERIFYPEER, false);
-    curl_easy_setopt(curlObject, CURLOPT_HTTPHEADER, header);
-    curl_easy_setopt(curlObject, CURLOPT_UPLOAD, 1L);
-}
 
 
 
