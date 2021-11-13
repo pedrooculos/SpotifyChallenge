@@ -37,15 +37,15 @@ void SpotifyApp::authentication()
     setAccessToken(accessToken);
 }
 
-const std::string SpotifyApp::search()
+const std::string SpotifyApp::search(const std::string& searchInput)
 {
     CurlHandler curl;
 
     std::string searchString = "https://api.spotify.com/v1/search";
-    searchString += "?q=Ramsey-Goodbye";
+    searchString += "?q=" + searchInput;
     searchString += "&type=track";
     searchString += "&market=ES";
-    searchString += "&limit=1";
+    searchString += "&limit=3";
     searchString += "&offset=0";
 
     std::string authenticationStr ="Authorization: Bearer " + getAccessToken().toStdString();

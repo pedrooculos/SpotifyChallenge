@@ -7,8 +7,8 @@
 #include <fstream>
 #include <sstream>
 #include <QJsonObject>
-#include <QJsonDocument>
 #include <QString>
+#include <algorithm>
 #include "jsonhandler.h"
 
 class SpotifyApp
@@ -27,7 +27,7 @@ class SpotifyApp
            Return:
             Return Spotify's response
         */
-        const std::string search();
+        const std::string search(const std::string&);
 
         void setAccessToken(const QString&);
         const QString getAccessToken();

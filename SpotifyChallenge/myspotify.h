@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <iostream>
+#include "spotifyapp.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MySpotify; }
@@ -21,5 +22,6 @@ private slots:
 
 private:
     Ui::MySpotify *ui;
+    SpotifyApp spotifyApp;
 };
 #endif // MYSPOTIFY_H
