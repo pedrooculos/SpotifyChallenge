@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <QJsonObject>
+#include <QJsonArray>
 
 class Playlists
 {
@@ -16,12 +17,12 @@ class Playlists
 
         void deletTrackFromPlaylist(const std::string& trackName);
 
-        const std::vector<QJsonObject> getPlaylist();
+        const QJsonArray getPlaylist();
         const std::string getName();
 
     private:
         std::string playlistName;
-        std::vector<QJsonObject> playlist;
+        QJsonArray playlist;
 };
 
 #endif // PLAYLISTS_H

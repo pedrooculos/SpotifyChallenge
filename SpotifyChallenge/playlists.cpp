@@ -16,8 +16,8 @@ void Playlists::deletTrackFromPlaylist(const std::string& trackIdToDelete)
 
     for(int i = 0; i < playlist.size(); i++)
     {
-        std::string trackid = playlist[i]["id"].toString().toStdString();
-        if (trackIdToDelete.compare(trackid) == 0)
+        std::string trackId = playlist.at(i).toObject()["id"].toString().toStdString();
+        if (trackIdToDelete.compare(trackId) == 0)
         {
             positionToDelet = i;
             break;
@@ -27,7 +27,7 @@ void Playlists::deletTrackFromPlaylist(const std::string& trackIdToDelete)
 }
 
 
-const std::vector<QJsonObject> Playlists::getPlaylist()
+const QJsonArray Playlists::getPlaylist()
 {
     return this->playlist;
 }

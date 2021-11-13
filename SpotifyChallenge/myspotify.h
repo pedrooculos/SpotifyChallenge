@@ -20,6 +20,10 @@ public:
 private slots:
     void on_searchButton_clicked();
 
+    void on_addPushButton_clicked();
+
+    void on_deletePushButton_clicked();
+
 private:
     Ui::MySpotify *ui;
     SpotifyApp spotifyApp;
