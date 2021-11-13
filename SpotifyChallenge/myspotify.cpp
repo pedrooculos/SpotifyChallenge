@@ -25,8 +25,6 @@ void MySpotify::on_searchButton_clicked()
 
     std::string result = takeTrackNameListFromJson(searchResultJson);
 
-    //std::cout << result.toStdString() << std::endl;
-
     ui->searchResultsTextBox->setPlainText(result.c_str());
 }
 

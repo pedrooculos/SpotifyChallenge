@@ -11,4 +11,6 @@ std::string takeTrackNameListFromJson(QJsonObject& searchResultJsonObject);
 
 std::string takeArtistName(QJsonObject& trackInformation);
 
+std::string takeId(QJsonObject& trackInformation);
+
 #endif // JSONHANDLER_H

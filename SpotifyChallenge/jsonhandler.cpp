@@ -25,8 +25,11 @@ std::string takeTrackNameListFromJson(QJsonObject& searchResult)
         QJsonObject trackJson = trackList[i].toObject();
         QString firstTrackName = trackJson["name"].toString();
         std::string artists = takeArtistName(trackJson);
-        tracksSearchResult += "Name: " + firstTrackName.toStdString() + " ";
-        tracksSearchResult += "Artist: " + artists + "\n\n";
+        std::string trackId = takeId(trackJson);
+        tracksSearchResult += "Name: " + firstTrackName.toStdString() + "\n";
+        tracksSearchResult += "Artist: " + artists + "\n";
+        tracksSearchResult += "Id: " + trackId +"\n";
+        tracksSearchResult += "\n";
     }
 
     return tracksSearchResult;
@@ -47,6 +50,11 @@ std::string takeArtistName(QJsonObject& trackInformation)
     }
 
     return artistStr;
+}
+
+std::string takeId(QJsonObject& trackInformation)
+{
+    return trackInformation["id"].toString().toStdString();
 }
 
 
