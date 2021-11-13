@@ -1,26 +1,32 @@
 #include "playlists.h"
 
 Playlists::Playlists()
-{
+{}
 
+void Playlists::addTrackToPlaylist(const QJsonObject& track)
+{
+    playlist.push_back(track);
 }
 
-void Playlists::addTrackToPlaylist(const std::string& trackId)
+void Playlists::deletTrackFromPlaylist(const std::string& trackIdToDelete)
 {
-    playlist.push_back(trackId);
+
+    int positionToDelet;
+
+    for(int i = 0; i < playlist.size(); i++)
+    {
+        std::string trackid = playlist[i]["id"].toString().toStdString();
+        if (trackIdToDelete.compare(trackid) == 0)
+        {
+            positionToDelet = i;
+            break;
+        }
+    }
+    playlist.erase(playlist.begin() + positionToDelet);
 }
 
-void Playlists::deletTrackFromPlaylist(const std::string& trackId)
-{
-    std::vector<std::string>::iterator positionToDelet;
 
-    positionToDelet = std::find(this->playlist.begin(), this->playlist.end(),trackId);
-
-    playlist.erase(positionToDelet);
-}
-
-
-const std::vector<std::string> Playlists::getPlaylist()
+const std::vector<QJsonObject> Playlists::getPlaylist()
 {
     return this->playlist;
 }

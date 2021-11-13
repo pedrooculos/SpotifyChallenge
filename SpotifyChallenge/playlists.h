@@ -5,18 +5,19 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <QJsonObject>
 
 class Playlists
 {
     public:
         Playlists();
-        void addTrackToPlaylist(const std::string&);
+        void addTrackToPlaylist(const QJsonObject&);
         void deletTrackFromPlaylist(const std::string&);
 
-        const std::vector<std::string> getPlaylist();
+        const std::vector<QJsonObject> getPlaylist();
 
     private:
-        std::vector<std::string> playlist;
+        std::vector<QJsonObject> playlist;
 };
 
 #endif // PLAYLISTS_H
