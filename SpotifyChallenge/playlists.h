@@ -10,11 +10,14 @@
 class Playlists
 {
     public:
-        Playlists(std::string);
-        void addTrackToPlaylist(const QJsonObject&);
-        void deletTrackFromPlaylist(const std::string&);
+        Playlists(std::string Name);
+
+        void addTrackToPlaylist(const QJsonObject& trackObject);
+
+        void deletTrackFromPlaylist(const std::string& trackName);
 
         const std::vector<QJsonObject> getPlaylist();
+        const std::string getName();
 
     private:
         std::string playlistName;

@@ -16,11 +16,12 @@ find_package(CURL REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        Tests/testAccessToken.cpp
-        myspotify.cpp myspotify.h myspotify.ui
-        spotifyapp.cpp spotifyapp.h
-        jsonhandler.h jsonhandler.cpp
+        Tests/testTrack.cpp
+        track.h track.cpp
         curlhandler.cpp curlhandler.h
+        spotifyapp.cpp spotifyapp.h
+        jsonhandler.cpp jsonhandler.h
+        playlists.cpp playlists.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

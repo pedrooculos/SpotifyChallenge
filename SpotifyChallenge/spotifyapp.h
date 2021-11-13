@@ -11,6 +11,7 @@
 #include <algorithm>
 #include "track.h"
 #include "jsonhandler.h"
+#include "playlists.h"
 
 class SpotifyApp
 {
@@ -28,16 +29,27 @@ class SpotifyApp
            Return:
             Return Spotify's response
         */
-        const std::string search(const std::string&);
-        const QJsonObject getTrack(const std::string&);
+        const std::string search(const std::string& musicName);
 
-        const Track createTask(const std::string& id, const QJsonObject& trackObject);
+
+        void addPlaylist(const Playlists&);
+        void createPlaylist(const std::string& playlistName);
+        void addTrackToPlaylist(const std::string& id, const std::string& playlistName);
+
+
+        const QString getAccessToken();
+        const std::vector<Playlists> getPlaylists();
 
         void setAccessToken(const QString&);
-        const QString getAccessToken();
+
+        //const Track createTrackObject(const std::string& id, const QJsonObject& trackObject);
+
+    private:
+        const QJsonObject getTrack(const std::string& id);
 
     private:
         QString accessToken;
+        std::vector<Playlists> playlists;
 };
 
 #endif // SPOTIFYAPP_H

@@ -68,11 +68,35 @@ const QJsonObject SpotifyApp::getTrack(const std::string& trackId)
     return trackObject;
 }
 
-const Track SpotifyApp::createTask(const std::string& trackId, const QJsonObject& trackObject)
+void SpotifyApp::addPlaylist(const Playlists& playlist)
+{
+    this->playlists.push_back(playlist);
+}
+
+void SpotifyApp::createPlaylist(const std::string &playlistName)
+{
+    Playlists playlist(playlistName);
+    this->addPlaylist(playlist);
+}
+
+/*
+const Track SpotifyApp::createTrackObject(const std::string& trackId, const QJsonObject& trackObject)
 {
     Track track(trackId,trackObject);
     return track;
+}*/
+
+void SpotifyApp::addTrackToPlaylist(const std::string &id, const std::string &playlistName)
+{
+    QJsonObject trackJson = getTrack(id);
+    this->playlists[0].addTrackToPlaylist(trackJson);
 }
+
+const std::vector<Playlists> SpotifyApp::getPlaylists()
+{
+    return this->playlists;
+}
+
 
 const QString SpotifyApp::getAccessToken()
 {

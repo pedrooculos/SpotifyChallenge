@@ -12,7 +12,6 @@ void Playlists::addTrackToPlaylist(const QJsonObject& track)
 
 void Playlists::deletTrackFromPlaylist(const std::string& trackIdToDelete)
 {
-
     int positionToDelet;
 
     for(int i = 0; i < playlist.size(); i++)
