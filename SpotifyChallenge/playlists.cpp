@@ -1,7 +1,9 @@
 #include "playlists.h"
 
-Playlists::Playlists()
-{}
+Playlists::Playlists(std::string playlistName)
+{
+    this->playlistName = playlistName;
+}
 
 void Playlists::addTrackToPlaylist(const QJsonObject& track)
 {
@@ -29,6 +31,11 @@ void Playlists::deletTrackFromPlaylist(const std::string& trackIdToDelete)
 const std::vector<QJsonObject> Playlists::getPlaylist()
 {
     return this->playlist;
+}
+
+const std::string Playlists::getName()
+{
+    return this->playlistName;
 }
 
 
