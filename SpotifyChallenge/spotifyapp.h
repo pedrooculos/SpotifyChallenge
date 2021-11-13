@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QString>
 #include <algorithm>
+#include "track.h"
 #include "jsonhandler.h"
 
 class SpotifyApp
@@ -28,6 +29,9 @@ class SpotifyApp
             Return Spotify's response
         */
         const std::string search(const std::string&);
+        const QJsonObject getTrack(const std::string&);
+
+        const Track createTask(const std::string& id, const QJsonObject& trackObject);
 
         void setAccessToken(const QString&);
         const QString getAccessToken();

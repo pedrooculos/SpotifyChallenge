@@ -54,6 +54,26 @@ const std::string SpotifyApp::search(const std::string& searchInput)
     return responseStdString;
 }
 
+const QJsonObject SpotifyApp::getTrack(const std::string& trackId)
+{
+    CurlHandler curl;
+    std::string trackUrl = "https://api.spotify.com/v1/tracks/";
+    trackUrl += trackId;
+
+    std::string authenticationStr ="Authorization: Bearer " + getAccessToken().toStdString();
+    std::string responseStdString = curl.getOperation(trackUrl,authenticationStr);
+
+    QJsonObject trackObject = strToQjsonObj(responseStdString);
+
+    return trackObject;
+}
+
+const Track SpotifyApp::createTask(const std::string& trackId, const QJsonObject& trackObject)
+{
+    Track track(trackId,trackObject);
+    return track;
+}
+
 const QString SpotifyApp::getAccessToken()
 {
     return this->accessToken;
