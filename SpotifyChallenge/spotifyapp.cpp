@@ -89,7 +89,22 @@ const Track SpotifyApp::createTrackObject(const std::string& trackId, const QJso
 void SpotifyApp::addTrackToPlaylist(const std::string &id, const std::string &playlistName)
 {
     QJsonObject trackJson = getTrack(id);
-    this->playlists[0].addTrackToPlaylist(trackJson);
+    bool playlistFound = false;
+    for(int i=0; i < playlists.size(); i++)
+    {
+        if(playlists[i].getName().compare(playlistName) == 0)
+        {
+            this->playlists[i].addTrackToPlaylist(trackJson);
+            playlistFound = true;
+            break;
+        }
+    }
+    if(playlistFound == false)
+    {
+        this->createPlaylist(playlistName);
+        this->playlists[playlists.size() -1].addTrackToPlaylist(trackJson);
+    }
+
 }
 
 const std::vector<Playlists> SpotifyApp::getPlaylists()

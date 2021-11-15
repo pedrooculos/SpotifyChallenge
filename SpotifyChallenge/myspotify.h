@@ -18,6 +18,8 @@ public:
     ~MySpotify();
 
 private slots:
+    void printPlaylist(const std::string& playlistName);
+
     void on_searchButton_clicked();
 
     void on_addPushButton_clicked();

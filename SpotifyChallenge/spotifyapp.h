@@ -9,7 +9,6 @@
 #include <QJsonObject>
 #include <QString>
 #include <algorithm>
-#include "track.h"
 #include "jsonhandler.h"
 #include "playlists.h"
 

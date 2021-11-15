@@ -14,6 +14,26 @@ MySpotify::~MySpotify()
     delete ui;
 }
 
+void MySpotify::printPlaylist(const std::string& playlistName){
+    std::string strToPrint;
+    std::vector<Playlists> playlists = this->spotifyApp.getPlaylists();
+
+    for(int i = 0; i < playlists.size(); i++)
+    {
+        if(playlists[i].getName().compare(playlistName) == 0)
+        {
+            QJsonArray selectedPlaylist = playlists[i].getPlaylist();
+            for(int j = 0; j < selectedPlaylist.size(); j++)
+            {
+                QJsonObject track = selectedPlaylist[j].toObject();
+                strToPrint += "Music: " + track["name"].toString().toStdString()+ "\n";
+            }
+        }
+    }
+
+    ui->playlistOut->setPlainText(strToPrint.c_str());
+}
+
 
 void MySpotify::on_searchButton_clicked()
 {
@@ -35,17 +55,11 @@ void MySpotify::on_addPushButton_clicked()
 {
     QString textedStr = ui->playlistInput->toPlainText();
     ui->playlistInput->clear();
+    QString playlistName = ui->playlistName->toPlainText();
 
-    spotifyApp.createPlaylist("Minha Play");
-    spotifyApp.addTrackToPlaylist(textedStr.toStdString(),"MyPlaylist");
+    this->spotifyApp.addTrackToPlaylist(textedStr.toStdString(),playlistName.toStdString());
 
-    std::vector<Playlists> playlists = spotifyApp.getPlaylists();
-
-    ui->searchResultsTextBox->setPlainText(playlists[0].getName().c_str());
-
-    QJsonObject track = playlists[0].getPlaylist()[0].toObject();
-
-    ui->searchResultsTextBox->setPlainText(track["id"].toString().toStdString().c_str());
+    this->printPlaylist(playlistName.toStdString());
 }
 
 
