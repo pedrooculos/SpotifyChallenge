@@ -2,6 +2,7 @@
 #include <QString>
 #include <QJsonObject>
 #include "playlists.h"
+#include "jsonhandler.h"
 
 
 QJsonObject createObject(std::string name)
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
 
     std::cout << playlist.printPlaylist() << std::endl;
 
+    writeJsonArrayToFile(playlist.getPlaylist(),"fileJson.txt");
 
     return 0;
 }

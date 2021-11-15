@@ -57,4 +57,17 @@ std::string takeId(QJsonObject& trackInformation)
     return trackInformation["id"].toString().toStdString();
 }
 
+void writeJsonArrayToFile(const QJsonArray& jsonArray,const std::string& fileName)
+{
+    QJsonDocument jsonDoc(jsonArray);
+
+    QString qStringFileName;
+    qStringFileName = qStringFileName.fromStdString(fileName);
+    QFile jsonFile(qStringFileName);
+
+    jsonFile.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
+    jsonFile.write(jsonDoc.toJson());
+    jsonFile.close();
+}
+
 
