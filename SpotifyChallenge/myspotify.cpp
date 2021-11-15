@@ -15,22 +15,7 @@ MySpotify::~MySpotify()
 }
 
 void MySpotify::printPlaylist(const std::string& playlistName){
-    std::string strToPrint;
-    std::vector<Playlists> playlists = this->spotifyApp.getPlaylists();
-
-    for(int i = 0; i < playlists.size(); i++)
-    {
-        if(playlists[i].getName().compare(playlistName) == 0)
-        {
-            QJsonArray selectedPlaylist = playlists[i].getPlaylist();
-            for(int j = 0; j < selectedPlaylist.size(); j++)
-            {
-                QJsonObject track = selectedPlaylist[j].toObject();
-                strToPrint += "Music: " + track["name"].toString().toStdString()+ "\n";
-            }
-        }
-    }
-
+    std::string strToPrint = this->spotifyApp.printPlaylist(playlistName);
     ui->playlistOut->setPlainText(strToPrint.c_str());
 }
 
@@ -69,5 +54,9 @@ void MySpotify::on_deletePushButton_clicked()
 {
     QString textedStr = ui->playlistInput->toPlainText();
     ui->playlistInput->clear();
+    QString playlistName = ui->playlistName->toPlainText();
+
+    this->spotifyApp.deleteTrackFromPlaylist(textedStr.toStdString(),playlistName.toStdString());
+    this->printPlaylist(playlistName.toStdString());
 }
 

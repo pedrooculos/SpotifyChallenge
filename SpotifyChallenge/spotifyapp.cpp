@@ -79,13 +79,6 @@ void SpotifyApp::createPlaylist(const std::string &playlistName)
     this->addPlaylist(playlist);
 }
 
-/*
-const Track SpotifyApp::createTrackObject(const std::string& trackId, const QJsonObject& trackObject)
-{
-    Track track(trackId,trackObject);
-    return track;
-}*/
-
 void SpotifyApp::addTrackToPlaylist(const std::string &id, const std::string &playlistName)
 {
     QJsonObject trackJson = getTrack(id);
@@ -105,6 +98,34 @@ void SpotifyApp::addTrackToPlaylist(const std::string &id, const std::string &pl
         this->playlists[playlists.size() -1].addTrackToPlaylist(trackJson);
     }
 
+}
+
+void SpotifyApp::deleteTrackFromPlaylist(const std::string &trackName, const std::string &playlistName)
+{
+    for(int i=0; i < playlists.size(); i++)
+    {
+        if(playlists[i].getName().compare(playlistName) == 0)
+        {
+            this->playlists[i].deleteTrackFromPlaylist(trackName);
+            break;
+        }
+    }
+}
+
+
+const std::string SpotifyApp::printPlaylist(const std::string &playlistName)
+{
+    std::string strToPrint = "Playlist: " + playlistName + "\n";
+    for(int i=0; i < playlists.size(); i++)
+    {
+        if(playlists[i].getName().compare(playlistName) == 0)
+        {
+            strToPrint += this->playlists[i].printPlaylist();
+            break;
+        }
+    }
+
+    return strToPrint;
 }
 
 const std::vector<Playlists> SpotifyApp::getPlaylists()

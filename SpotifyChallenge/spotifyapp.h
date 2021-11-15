@@ -31,10 +31,11 @@ class SpotifyApp
         const std::string search(const std::string& musicName);
 
 
-        void addPlaylist(const Playlists&);
         void createPlaylist(const std::string& playlistName);
         void addTrackToPlaylist(const std::string& id, const std::string& playlistName);
+        void deleteTrackFromPlaylist(const std::string& trackName, const std::string& playlistName);
 
+        const std::string printPlaylist(const std::string& playlistName);
 
         const QString getAccessToken();
         const std::vector<Playlists> getPlaylists();
@@ -45,6 +46,7 @@ class SpotifyApp
 
     private:
         const QJsonObject getTrack(const std::string& id);
+        void addPlaylist(const Playlists& playlist);
 
     private:
         QString accessToken;
