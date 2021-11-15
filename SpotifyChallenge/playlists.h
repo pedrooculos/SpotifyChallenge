@@ -15,7 +15,9 @@ class Playlists
 
         void addTrackToPlaylist(const QJsonObject& trackObject);
 
-        void deletTrackFromPlaylist(const std::string& trackName);
+        void deleteTrackFromPlaylist(const std::string& trackName);
+
+        const std::string printPlaylist();
 
         const QJsonArray getPlaylist();
         const std::string getName();
