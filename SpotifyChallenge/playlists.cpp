@@ -28,7 +28,7 @@ void Playlists::deleteTrackFromPlaylist(const std::string& trackNameToDelete)
         playlist.erase(playlist.begin() + positionToDelete);
 }
 
-const std::string Playlists::printPlaylist()
+std::string Playlists::printPlaylist()
 {
     std::string strToPrint;
     for(int j = 0; j < this->playlist.size(); j++)
@@ -40,13 +40,27 @@ const std::string Playlists::printPlaylist()
     return strToPrint;
 }
 
+QJsonObject Playlists::playlistToJsonObject()
+{
+    QJsonObject jsonObject;
+    QString qStr;
+    qStr = qStr.fromStdString(this->playlistName);
+    jsonObject.insert("name",qStr);
+    jsonObject.insert("object",this->playlist);
+    return jsonObject;
+}
 
-const QJsonArray Playlists::getPlaylist()
+QJsonArray Playlists::getPlaylist()
 {
     return this->playlist;
 }
 
-const std::string Playlists::getName()
+void Playlists::setPlaylist(const QJsonArray &playlistJsonArray)
+{
+    this->playlist = playlistJsonArray;
+}
+
+std::string Playlists::getName()
 {
     return this->playlistName;
 }

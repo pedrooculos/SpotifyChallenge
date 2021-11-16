@@ -16,6 +16,7 @@ class SpotifyApp
 {
     public:
         SpotifyApp();
+        ~SpotifyApp();
 
         /* Function:
             Authenticate the user for spotify's API
@@ -28,25 +29,27 @@ class SpotifyApp
            Return:
             Return Spotify's response
         */
-        const std::string search(const std::string& musicName);
+        std::string search(const std::string& musicName);
 
 
         void createPlaylist(const std::string& playlistName);
         void addTrackToPlaylist(const std::string& id, const std::string& playlistName);
         void deleteTrackFromPlaylist(const std::string& trackName, const std::string& playlistName);
 
-        const std::string printPlaylist(const std::string& playlistName);
+        std::string printPlaylist(const std::string& playlistName);
 
-        const QString getAccessToken();
-        const std::vector<Playlists> getPlaylists();
+        QString getAccessToken();
+        std::vector<Playlists> getPlaylists();
 
         void setAccessToken(const QString&);
 
-        //const Track createTrackObject(const std::string& id, const QJsonObject& trackObject);
-
     private:
-        const QJsonObject getTrack(const std::string& id);
+        QJsonObject getTrack(const std::string& id);
         void addPlaylist(const Playlists& playlist);
+        void takePlaylistsFromJsonArray(const QJsonArray& playlistsJsonArray);
+
+        QJsonArray playlistToJsonArray();
+        void savePlaylistsInFile(const QJsonArray& playlistsJsonArray,const std::string& fileName);
 
     private:
         QString accessToken;

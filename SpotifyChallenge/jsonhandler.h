@@ -6,17 +6,18 @@
 #include <QJsonArray>
 #include <QString>
 #include <QFile>
+#include <iostream>
 
-QJsonObject strToQjsonObj(std::string&);
+QJsonObject strToQjsonObj(const std::string&);
 
-std::string takeTrackNameListFromJson(QJsonObject& searchResultJsonObject);
+std::string takeTrackNameListFromJson(const QJsonObject& searchResultJsonObject);
 
-std::string takeArtistName(QJsonObject& trackInformation);
+std::string takeArtistName(const QJsonObject& trackInformation);
 
-std::string takeId(QJsonObject& trackInformation);
+std::string takeId(const QJsonObject& trackInformation);
 
 void writeJsonArrayToFile(const QJsonArray& jsonArray, const std::string& fileName);
 
-QJsonArray readJsonArrayFromFile(std::string fileName);
+QJsonArray readJsonArrayFromFile(const std::string fileName);
 
 #endif // JSONHANDLER_H

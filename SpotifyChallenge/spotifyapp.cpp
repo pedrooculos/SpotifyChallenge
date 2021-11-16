@@ -16,8 +16,17 @@ static std::string getStringFromFile(std::string path)
 
 SpotifyApp::SpotifyApp()
 {
+    QJsonArray playlistsJsonArray = readJsonArrayFromFile("Playlists.txt");
+    takePlaylistsFromJsonArray(playlistsJsonArray);
     SpotifyApp::authentication();
 }
+
+SpotifyApp::~SpotifyApp()
+{
+    QJsonArray playlistsArray = playlistToJsonArray();
+    this->savePlaylistsInFile(playlistsArray,"Playlists.txt");
+}
+
 
 void SpotifyApp::authentication()
 {
@@ -37,7 +46,7 @@ void SpotifyApp::authentication()
     setAccessToken(accessToken);
 }
 
-const std::string SpotifyApp::search(const std::string& searchInput)
+std::string SpotifyApp::search(const std::string& searchInput)
 {
     CurlHandler curl;
 
@@ -54,7 +63,7 @@ const std::string SpotifyApp::search(const std::string& searchInput)
     return responseStdString;
 }
 
-const QJsonObject SpotifyApp::getTrack(const std::string& trackId)
+QJsonObject SpotifyApp::getTrack(const std::string& trackId)
 {
     CurlHandler curl;
     std::string trackUrl = "https://api.spotify.com/v1/tracks/";
@@ -113,7 +122,7 @@ void SpotifyApp::deleteTrackFromPlaylist(const std::string &trackName, const std
 }
 
 
-const std::string SpotifyApp::printPlaylist(const std::string &playlistName)
+std::string SpotifyApp::printPlaylist(const std::string &playlistName)
 {
     std::string strToPrint = "Playlist: " + playlistName + "\n";
     for(int i=0; i < playlists.size(); i++)
@@ -128,13 +137,44 @@ const std::string SpotifyApp::printPlaylist(const std::string &playlistName)
     return strToPrint;
 }
 
-const std::vector<Playlists> SpotifyApp::getPlaylists()
+void SpotifyApp::takePlaylistsFromJsonArray(const QJsonArray &playlistsJsonArray)
+{
+    for(int i = 0; i < playlistsJsonArray.size();i++)
+    {
+        QJsonObject jsonObject = playlistsJsonArray[i].toObject();
+        Playlists playlist(jsonObject["name"].toString().toStdString());
+        playlist.setPlaylist(jsonObject["object"].toArray());
+        this->playlists.push_back(playlist);
+    }
+}
+
+QJsonArray SpotifyApp::playlistToJsonArray()
+{
+    QJsonArray playlistsArray;
+    for(int i=0; i < this->playlists.size();i++)
+    {
+        QJsonObject playlistObject = this->playlists[i].playlistToJsonObject();
+        playlistsArray.append(playlistObject);
+    }
+    return playlistsArray;
+}
+
+void SpotifyApp::savePlaylistsInFile(const QJsonArray &playlistsJsonArray,const std::string& fileName)
+{
+    QJsonDocument jsonDoc(playlistsJsonArray);
+
+    QFile jsonFile(fileName.c_str());
+    jsonFile.open(QFile::WriteOnly);
+    jsonFile.write(jsonDoc.toJson());
+}
+
+std::vector<Playlists> SpotifyApp::getPlaylists()
 {
     return this->playlists;
 }
 
 
-const QString SpotifyApp::getAccessToken()
+QString SpotifyApp::getAccessToken()
 {
     return this->accessToken;
 }

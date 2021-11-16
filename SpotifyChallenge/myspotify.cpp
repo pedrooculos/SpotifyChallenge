@@ -12,6 +12,7 @@ MySpotify::MySpotify(QWidget *parent)
 MySpotify::~MySpotify()
 {
     delete ui;
+
 }
 
 void MySpotify::printPlaylist(const std::string& playlistName){

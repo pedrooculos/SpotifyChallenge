@@ -17,10 +17,14 @@ class Playlists
 
         void deleteTrackFromPlaylist(const std::string& trackName);
 
-        const std::string printPlaylist();
+        std::string printPlaylist();
 
-        const QJsonArray getPlaylist();
-        const std::string getName();
+        QJsonArray getPlaylist();
+        void setPlaylist(const QJsonArray& playlistJsonArray);
+
+        std::string getName();
+
+        QJsonObject playlistToJsonObject();
 
     private:
         std::string playlistName;

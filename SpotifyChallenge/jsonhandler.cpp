@@ -1,7 +1,7 @@
 #include "jsonhandler.h"
 
 
-QJsonObject strToQjsonObj(std::string& stdString)
+QJsonObject strToQjsonObj(const std::string& stdString)
 {
     QString qString;
     qString = qString.fromStdString(stdString);
@@ -12,9 +12,9 @@ QJsonObject strToQjsonObj(std::string& stdString)
 }
 
 
-std::string takeTrackNameListFromJson(QJsonObject& searchResult)
+std::string takeTrackNameListFromJson(const QJsonObject& searchResult)
 {
-    QJsonObject tracks = searchResult.take("tracks").toObject();
+    QJsonObject tracks = searchResult["tracks"].toObject();
 
     QJsonArray trackList = tracks["items"].toArray();
 
@@ -36,7 +36,7 @@ std::string takeTrackNameListFromJson(QJsonObject& searchResult)
 }
 
 
-std::string takeArtistName(QJsonObject& trackInformation)
+std::string takeArtistName(const QJsonObject& trackInformation)
 {
     QJsonArray artistList = trackInformation["artists"].toArray();
 
@@ -52,7 +52,7 @@ std::string takeArtistName(QJsonObject& trackInformation)
     return artistStr;
 }
 
-std::string takeId(QJsonObject& trackInformation)
+std::string takeId(const QJsonObject& trackInformation)
 {
     return trackInformation["id"].toString().toStdString();
 }
@@ -69,5 +69,26 @@ void writeJsonArrayToFile(const QJsonArray& jsonArray,const std::string& fileNam
     jsonFile.write(jsonDoc.toJson());
     jsonFile.close();
 }
+
+QJsonArray readJsonArrayFromFile(const std::string fileName)
+{
+    QString qStringFileName;
+    qStringFileName = qStringFileName.fromStdString(fileName);
+    QFile jsonFile(qStringFileName);
+
+    QJsonArray jsonArray;
+    if(jsonFile.open(QFile::ReadOnly| QFile::Text | QFile::Truncate))
+    {
+        QJsonDocument jsonDoc;
+        jsonDoc = QJsonDocument::fromJson(jsonFile.readAll());
+        jsonArray = jsonDoc.array();
+        std::cout << "Open" << std::endl;
+        std::cout << jsonArray[1].toString().toStdString() << std::endl;
+    }
+
+    return jsonArray;
+}
+
+
 
 
