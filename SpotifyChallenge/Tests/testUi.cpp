@@ -1,6 +1,6 @@
 #include <iostream>
 #include <QApplication>
-#include "myspotify.h"
+#include "include/myspotify.h"
 
 int main(int argc, char *argv[])
 {

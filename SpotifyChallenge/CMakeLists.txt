@@ -17,11 +17,20 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         Tests/testUi.cpp
-        curlhandler.cpp curlhandler.h
-        spotifyapp.cpp spotifyapp.h
-        jsonhandler.cpp jsonhandler.h
-        playlists.cpp playlists.h
-        myspotify.cpp myspotify.h myspotify.ui
+
+        scr/curlhandler.cpp
+        scr/spotifyapp.cpp
+        scr/jsonhandler.cpp
+        scr/playlists.cpp
+        scr/myspotify.cpp
+        scr/myspotify.ui
+
+
+        include/curlhandler.h
+        include/spotifyapp.h
+        include/jsonhandler.h
+        include/playlists.h
+        include/myspotify.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
