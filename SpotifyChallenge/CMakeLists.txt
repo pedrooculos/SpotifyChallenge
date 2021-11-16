@@ -16,7 +16,7 @@ find_package(CURL REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        Tests/testUi.cpp
+        main.cpp
 
         scr/curlhandler.cpp
         scr/spotifyapp.cpp

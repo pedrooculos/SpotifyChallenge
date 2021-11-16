@@ -1,11 +1,11 @@
-#include "myspotify.h"
+#include "include/myspotify.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MySpotify w;
-    w.show();
+    MySpotify mySpotify;
+    mySpotify.show();
     return a.exec();
 }
